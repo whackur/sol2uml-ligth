@@ -1,0 +1,5 @@
+allowBuilds:
+  '@parcel/watcher': true
+  es5-ext: true
+overrides:
+  'solc>tmp': 0.2.7

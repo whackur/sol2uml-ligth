@@ -1,0 +1,3 @@
+export const BITS_PER_BYTE = 8
+export const STORAGE_SLOT_BYTES = 32
+export const STORAGE_SLOT_HEX_LENGTH = STORAGE_SLOT_BYTES * 2

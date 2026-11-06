@@ -1,0 +1,5 @@
+src/ts/**/__tests__/
+src/ts/**/*.test.ts
+tests/
+lib/**/__tests__/
+lib/**/*.test.js

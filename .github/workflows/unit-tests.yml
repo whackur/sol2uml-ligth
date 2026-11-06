@@ -1,0 +1,29 @@
+name: Unit Tests
+on: [push]
+jobs:
+    build:
+        strategy:
+            fail-fast: false
+            max-parallel: 6
+            matrix:
+                platform: [ubuntu-latest, macos-latest, windows-latest]
+                node-version: [24.x, 26.x]
+        runs-on: ${{ matrix.platform }}
+        steps:
+            - uses: actions/checkout@v3
+            - uses: pnpm/action-setup@v6
+              with:
+                  version: 12.18.0
+                  run_install: false
+            - name: Use Node.js ${{ matrix.node-version }} on ${{ matrix.platform }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm lint
+            - run: pnpm run examples:build
+            - run: pnpm test
+              env:
+                  DEBUG: sol2uml
+                  CI: true

@@ -1,0 +1,22 @@
+export interface ClassOptions {
+    hideConstants?: boolean
+    hideContracts?: boolean
+    hideVariables?: boolean
+    hideFunctions?: boolean
+    hideTypes?: boolean
+    hideModifiers?: boolean
+    hideEvents?: boolean
+    hideStructs?: boolean
+    hideEnums?: boolean
+    hideLibraries?: boolean
+    hideInterfaces?: boolean
+    hidePrivates?: boolean
+    hideAbstracts?: boolean
+    hideFilename?: boolean
+    hideSourceContract?: boolean
+    hideDepFunctions?: boolean
+    backColor?: string
+    shapeColor?: string
+    fillColor?: string
+    textColor?: string
+}

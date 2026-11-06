@@ -1,0 +1,59 @@
+name: Installation tests
+on:
+    workflow_run:
+        workflows: ['Platform tests']
+        types: [completed]
+jobs:
+    build:
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        strategy:
+            fail-fast: false
+            max-parallel: 6
+            matrix:
+                platform: [ubuntu-latest, macos-latest, windows-latest]
+                node-version: [24.x, 26.x]
+        runs-on: ${{ matrix.platform }}
+        steps:
+            - uses: actions/checkout@v3
+            - uses: pnpm/action-setup@v6
+              with:
+                  version: 12.18.0
+                  run_install: false
+            - name: Use Node.js ${{ matrix.node-version }} on ${{ matrix.platform }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - name: Pack CLI
+              id: pack
+              shell: bash
+              run: |
+                  pnpm pack --pack-destination "$RUNNER_TEMP"
+                  node -e 'const fs = require("node:fs"); const p = require("./package.json"); fs.appendFileSync(process.env.GITHUB_OUTPUT, "package=" + p.name + "-" + p.version + ".tgz\n")'
+            - name: Install packed CLI
+              shell: bash
+              run: |
+                  node -e 'const fs = require("node:fs"); const path = require("node:path"); const dir = path.join(process.env.RUNNER_TEMP, "consumer"); fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync(path.join(dir, "package.json"), JSON.stringify({ name: "sol2uml-light-install-test", version: "1.0.0", private: true }));'
+                  pnpm --dir "$RUNNER_TEMP/consumer" add --allow-build=es5-ext "$RUNNER_TEMP/${{ steps.pack.outputs.package }}"
+            - name: ExampleToken class SVG
+              run: pnpm exec sol2uml-light class "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -b ExampleToken -f svg -o "${{ runner.temp }}/ExampleToken-class.svg"
+              working-directory: ${{ runner.temp }}/consumer
+            - name: ExampleToken storage PNG
+              run: pnpm exec sol2uml-light storage "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -c ExampleToken -f png -o "${{ runner.temp }}/ExampleToken-storage.png"
+              working-directory: ${{ runner.temp }}/consumer
+            - name: ExampleNft class PNG
+              run: pnpm exec sol2uml-light class "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -b ExampleNft -f png -o "${{ runner.temp }}/ExampleNft-class.png"
+              working-directory: ${{ runner.temp }}/consumer
+            - name: ExampleNft storage SVG
+              run: pnpm exec sol2uml-light storage "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -c ExampleNft -f svg -o "${{ runner.temp }}/ExampleNft-storage.svg"
+              working-directory: ${{ runner.temp }}/consumer
+            - name: ExampleVault class DOT, SVG, and PNG
+              run: pnpm exec sol2uml-light class "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -b ExampleVault -f all -o "${{ runner.temp }}/ExampleVault-class.svg"
+              working-directory: ${{ runner.temp }}/consumer
+            - name: ExampleVault storage DOT, SVG, and PNG
+              run: pnpm exec sol2uml-light storage "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -c ExampleVault -f all -o "${{ runner.temp }}/ExampleVault-storage.svg"
+              working-directory: ${{ runner.temp }}/consumer
+            - name: Verify rendered diagrams
+              run: node -e 'const fs = require("node:fs"); const path = require("node:path"); const names = ["ExampleToken-class.svg", "ExampleToken-storage.png", "ExampleNft-class.png", "ExampleNft-storage.svg", "ExampleVault-class.dot", "ExampleVault-class.svg", "ExampleVault-class.png", "ExampleVault-storage.dot", "ExampleVault-storage.svg", "ExampleVault-storage.png"]; for (const name of names) { const file = path.join(process.env.RUNNER_TEMP, name); if (!fs.existsSync(file) || fs.statSync(file).size === 0) throw new Error("Missing rendered diagram " + file); }'
+              working-directory: ${{ runner.temp }}/consumer
