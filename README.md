@@ -108,6 +108,14 @@ node lib/sol2uml.js storage ./src/contracts/storage -c BasicStorage -sc deeppink
 
 ![BasicStorage with custom colors](./examples/storage/BasicStorageColor.svg)
 
+## Runtime dependencies
+
+The CLI is compiled with `tsc` and is not bundled, so every runtime dependency is installed in full on the user's machine and tree-shaking does not reduce install size. To keep the package light, it does not depend on a general Ethereum library such as ethers or viem. The few EVM helpers it needs (keccak256, EIP-55 address checksums, hex and UTF-8 conversion) live in `src/ts/utils/evm.ts` on top of [@noble/hashes](https://github.com/paulmillr/noble-hashes). Explorer and JSON-RPC requests use the built-in Node.js `fetch`, and Solidity file discovery uses `fs.promises.readdir`, so axios and klaw are no longer needed.
+
+`@noble/hashes` stays on 1.x because 2.x is published as ESM only, and this CommonJS package compiles with the TypeScript `Node16` module setting, which cannot import ESM-only packages.
+
+Network requests time out after 120 seconds, and storage slot reads are sent as JSON-RPC batches of at most 100 calls because many hosted nodes reject larger batches. Credentials in a node URL (`https://user:password@host`) are sent as a Basic `Authorization` header because `fetch` rejects URLs with credentials. Node and explorer URLs often contain API keys, so request errors and debug messages show only the URL origin, replace the path, query, and credentials with `<REDACTED>`, and do not attach the underlying `fetch` error, whose message can contain the full URL.
+
 ## Version 2.x changes
 
 The 2.x release introduced subcommands and contract storage diagrams. See [version 2.x changes](./version2.md) for changes from 1.x.

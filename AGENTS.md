@@ -9,6 +9,8 @@
 ## Compatibility
 
 - Keep Commander at version 12 or lower unless all multi-character short flags and their documented invocations are migrated together. Commander 13 rejects flags such as `-hv`, `-sf`, and `-bc`.
+- Keep `@noble/hashes` on 1.x; 2.x is ESM-only and cannot be imported under the Node16 CommonJS setup. Do not reintroduce ethers, viem, axios, or klaw for helpers already covered by `src/ts/utils/evm.ts`, `http.ts`, `jsonRpc.ts`, or the readdir-based file walker; see the README "Runtime dependencies" section.
+- Never put node or explorer URLs in errors or logs without `redactUrl`; they commonly embed API keys.
 - `@openzeppelin/contracts` is a development-only fixture source for diagrams and tests. Keep the committed dependency and lockfile version stable unless fixture changes are intentional.
 
 ## Rendering
