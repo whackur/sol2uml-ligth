@@ -1,4 +1,4 @@
-import { keccak256, toBeHex, zeroPadValue } from 'ethers'
+import { keccak256, toBeHex, zeroPadValue } from '../utils/evm.js'
 import { STORAGE_SLOT_BYTES } from './constants.js'
 import type { Variable } from './types.js'
 

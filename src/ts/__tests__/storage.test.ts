@@ -7,7 +7,6 @@ import {
     convertClasses2StorageSections,
     StorageSectionType,
 } from '../converterClasses2Storage.js'
-import { decodeBytes32String, encodeBytes32String } from 'ethers'
 
 describe('storage parser', () => {
     describe('is elementary type?', () => {
@@ -386,20 +385,6 @@ describe('storage parser', () => {
                 expect(size).toEqual(expected)
                 expect(dynamic).toEqual(false)
             })
-        })
-    })
-    describe('strings', () => {
-        it('bytes to string', () => {
-            expect(
-                decodeBytes32String(
-                    '0x5465737453746f7261676520636f6e7472616374000000000000000000000000',
-                ),
-            ).toEqual('TestStorage contract')
-        })
-        it('string to bytes', () => {
-            expect(encodeBytes32String('Less than 31 bytes')).toEqual(
-                '0x4c657373207468616e2033312062797465730000000000000000000000000000',
-            )
         })
     })
     describe('calc dynamic array starting slot', () => {

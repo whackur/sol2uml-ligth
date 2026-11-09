@@ -1,5 +1,5 @@
 import { InvalidArgumentError, InvalidOptionArgumentError } from 'commander'
-import { getAddress, keccak256, toUtf8Bytes } from 'ethers'
+import { getAddress, keccak256Utf8 } from '../utils/evm.js'
 import { isElementary } from '../converterClasses2Storage.js'
 import { bytes32, commaSeparatedList, ethereumAddress } from '../utils/regEx.js'
 
@@ -58,14 +58,13 @@ export const validateSlotNames = (
                     offset: slot,
                 }
             }
-            const offset = keccak256(toUtf8Bytes(slot))
+            const offset = keccak256Utf8(slot)
             debug(`Slot name "${slot}" has hash "${offset}"`)
             return {
                 name: slot,
                 offset,
             }
         })
-        console.log(results.length)
         return results
     } catch {
         /* validation failed */

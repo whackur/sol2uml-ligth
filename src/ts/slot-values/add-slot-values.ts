@@ -1,4 +1,4 @@
-import type { BigNumberish } from 'ethers'
+import type { BigNumberish } from '../utils/evm.js'
 import { AttributeType } from '../umlClass.js'
 import { getSlotValues } from './rpc.js'
 import { parseValue } from './value-decoding.js'

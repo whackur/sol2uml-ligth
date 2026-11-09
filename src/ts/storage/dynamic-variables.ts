@@ -1,5 +1,5 @@
 import { AttributeType } from '../umlClass.js'
-import type { BigNumberish } from 'ethers'
+import type { BigNumberish } from '../utils/evm.js'
 import { addSlotValues } from '../slot-values/add-slot-values.js'
 import { dynamicSlotSize } from '../slot-values/dynamic-slot-size.js'
 import { addArrayVariables } from './array-variables.js'

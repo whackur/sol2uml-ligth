@@ -1,5 +1,5 @@
-import { toBeHex } from 'ethers'
-import type { BigNumberish } from 'ethers'
+import { toBeHex } from './utils/evm.js'
+import type { BigNumberish } from './utils/evm.js'
 
 const debug = require('debug')('sol2uml-light')
 

@@ -1,4 +1,4 @@
-import { formatUnits, getAddress } from 'ethers'
+import { getAddress } from '../utils/evm.js'
 import { AttributeType } from '../umlClass.js'
 import type { Variable } from '../storage/types.js'
 import { convert2String } from './string-format.js'
@@ -30,7 +30,7 @@ export const parseValue = (variable: Variable): string => {
             variable.attributeType === AttributeType.Array &&
             variable.dynamic
         ) {
-            return formatUnits('0x' + variableValue, 0)
+            return BigInt('0x' + variableValue).toString()
         }
 
         return undefined
@@ -95,7 +95,7 @@ const parseElementaryValue = (
         return getAddress('0x' + variableValue)
     }
     if (variable.type.match(/^uint([0-9]*)$/)) {
-        const parsedValue = formatUnits('0x' + variableValue, 0)
+        const parsedValue = BigInt('0x' + variableValue).toString()
         return commify(parsedValue)
     }
 
@@ -114,7 +114,7 @@ const parseElementaryValue = (
             const negativeOne = BigInt('0xFF' + 'F'.repeat(hexSize - 2))
             rawValue = (negativeOne - rawValue + 1n) * -1n
         }
-        const parsedValue = formatUnits(rawValue, 0)
+        const parsedValue = rawValue.toString()
         return commify(parsedValue)
     }
     // add fixed point numbers when they are supported by Solidity

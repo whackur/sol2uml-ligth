@@ -1,4 +1,4 @@
-import { toUtf8String } from 'ethers'
+import { toUtf8String } from '../utils/evm.js'
 import { STORAGE_SLOT_HEX_LENGTH } from '../storage/constants.js'
 
 const ZERO_STORAGE_SLOT = `0x${'0'.repeat(STORAGE_SLOT_HEX_LENGTH)}`
