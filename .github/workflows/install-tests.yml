@@ -14,13 +14,13 @@ jobs:
                 node-version: [24.x, 26.x]
         runs-on: ${{ matrix.platform }}
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v6
             - uses: pnpm/action-setup@v6
               with:
                   version: 12.18.0
                   run_install: false
             - name: Use Node.js ${{ matrix.node-version }} on ${{ matrix.platform }}
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v6
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: pnpm
@@ -36,24 +36,8 @@ jobs:
               run: |
                   node -e 'const fs = require("node:fs"); const path = require("node:path"); const dir = path.join(process.env.RUNNER_TEMP, "consumer"); fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync(path.join(dir, "package.json"), JSON.stringify({ name: "sol2uml-light-install-test", version: "1.0.0", private: true }));'
                   pnpm --dir "$RUNNER_TEMP/consumer" add --allow-build=es5-ext "$RUNNER_TEMP/${{ steps.pack.outputs.package }}"
-            - name: ExampleToken class SVG
-              run: pnpm exec sol2uml-light class "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -b ExampleToken -f svg -o "${{ runner.temp }}/ExampleToken-class.svg"
+            - name: Render through the installed bin shim
+              run: pnpm exec sol2uml-light class "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -b ExampleToken -f svg -o "${{ runner.temp }}/shim-ExampleToken-class.svg"
               working-directory: ${{ runner.temp }}/consumer
-            - name: ExampleToken storage PNG
-              run: pnpm exec sol2uml-light storage "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -c ExampleToken -f png -o "${{ runner.temp }}/ExampleToken-storage.png"
-              working-directory: ${{ runner.temp }}/consumer
-            - name: ExampleNft class PNG
-              run: pnpm exec sol2uml-light class "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -b ExampleNft -f png -o "${{ runner.temp }}/ExampleNft-class.png"
-              working-directory: ${{ runner.temp }}/consumer
-            - name: ExampleNft storage SVG
-              run: pnpm exec sol2uml-light storage "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -c ExampleNft -f svg -o "${{ runner.temp }}/ExampleNft-storage.svg"
-              working-directory: ${{ runner.temp }}/consumer
-            - name: ExampleVault class DOT, SVG, and PNG
-              run: pnpm exec sol2uml-light class "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -b ExampleVault -f all -o "${{ runner.temp }}/ExampleVault-class.svg"
-              working-directory: ${{ runner.temp }}/consumer
-            - name: ExampleVault storage DOT, SVG, and PNG
-              run: pnpm exec sol2uml-light storage "${{ github.workspace }}/tests/contracts/current,${{ github.workspace }}/node_modules/@openzeppelin/contracts" -c ExampleVault -f all -o "${{ runner.temp }}/ExampleVault-storage.svg"
-              working-directory: ${{ runner.temp }}/consumer
-            - name: Verify rendered diagrams
-              run: node -e 'const fs = require("node:fs"); const path = require("node:path"); const names = ["ExampleToken-class.svg", "ExampleToken-storage.png", "ExampleNft-class.png", "ExampleNft-storage.svg", "ExampleVault-class.dot", "ExampleVault-class.svg", "ExampleVault-class.png", "ExampleVault-storage.dot", "ExampleVault-storage.svg", "ExampleVault-storage.png"]; for (const name of names) { const file = path.join(process.env.RUNNER_TEMP, name); if (!fs.existsSync(file) || fs.statSync(file).size === 0) throw new Error("Missing rendered diagram " + file); }'
-              working-directory: ${{ runner.temp }}/consumer
+            - name: Render and verify diagrams with the installed package
+              run: node scripts/ci-render-diagrams.cjs "${{ runner.temp }}/consumer/node_modules/sol2uml-light/lib/sol2uml.js" "${{ runner.temp }}/diagrams"
