@@ -196,9 +196,6 @@ importers:
       js-graph-algorithms:
         specifier: ^1.0.18
         version: 1.0.18
-      klaw:
-        specifier: ^4.1.0
-        version: 4.1.0
     devDependencies:
       '@account-abstraction/contracts':
         specifier: 0.8.0
@@ -215,9 +212,6 @@ importers:
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
-      '@types/klaw':
-        specifier: ^3.0.8
-        version: 3.0.8
       '@types/node':
         specifier: ^24.19.2
         version: 24.19.2
@@ -852,9 +846,6 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
-
-  '@types/klaw@3.0.8':
-    resolution: {integrity: sha512-JNNpHCo5psAeI304Y18DFN3dRMl/Yo+r24dSGJJ73IHjjMQB2o7ztY+z+1F9hNTj3LIR0fa3Ute4cO0yUNhWGw==}
 
   '@types/node@24.19.2':
     resolution: {integrity: sha512-93d49wCWJkCyN87MxLpNN6KXPCwFw7bVUg79mGUV1OS40JGWwVCr8n61DXCSqz7CV6/VfPkb7xec7uP2M+QHWQ==}
@@ -1744,10 +1735,6 @@ packages:
 
   keyv@5.6.0:
     resolution: {integrity: sha512-CYDD3SOtsHtyXeEORYRx2qBtpDJFjRTGXUtmNEMGyzYOKj1TE3tycdlho7kA1Ufx9OYWZzg52QFBGALTirzDSw==}
-
-  klaw@4.1.0:
-    resolution: {integrity: sha512-1zGZ9MF9H22UnkpVeuaGKOjfA2t6WrfdrJmGjy16ykcjnKQDmHVX+KI477rpbGevz/5FD4MC3xf1oxylBgcaQw==}
-    engines: {node: '>=14.14.0'}
 
   leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
@@ -2905,10 +2892,6 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/klaw@3.0.8':
-    dependencies:
-      '@types/node': 24.19.2
-
   '@types/node@24.19.2':
     dependencies:
       undici-types: 7.24.6
@@ -3963,8 +3946,6 @@ snapshots:
   keyv@5.6.0:
     dependencies:
       '@keyv/serialize': 1.1.1
-
-  klaw@4.1.0: {}
 
   leven@3.1.0: {}
 
