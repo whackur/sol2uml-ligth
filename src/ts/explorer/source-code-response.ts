@@ -25,7 +25,8 @@ export const decodeSourceCodeResponse = (
     }
 
     const contractResults = responseData.result as ExplorerContractResult[]
-    let remappings: Remapping[]
+    // Stays undefined for plain single-file sources; kept as-is
+    let remappings!: Remapping[]
     const results = contractResults.map((result) => {
         if (!result.SourceCode) {
             throw new Error(

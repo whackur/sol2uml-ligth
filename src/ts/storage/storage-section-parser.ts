@@ -20,21 +20,24 @@ export const parseStorageSectionFromAttribute = (
     mapping: boolean,
     arrayItems: number,
     noExpandVariables: string[],
-): {
-    storageSection: StorageSection
-    enumValues?: string[]
-} => {
+):
+    | {
+          storageSection?: StorageSection
+          enumValues?: string[]
+      }
+    | undefined => {
     if (attribute.attributeType === AttributeType.Array) {
-        const result = attribute.type.match(/\[([\w$.]*)]$/)
+        // Array type names always end with a bracketed dimension
+        const result = attribute.type!.match(/\[([\w$.]*)]$/)!
         const dynamic = result[1] === ''
         const arrayLength = !dynamic
             ? findDimensionLength(umlClass, result[1], otherClasses)
             : undefined
 
         // address[][4][2] uses address[][4] as its base item type.
-        const baseType = attribute.type.substring(
+        const baseType = attribute.type!.substring(
             0,
-            attribute.type.lastIndexOf('['),
+            attribute.type!.lastIndexOf('['),
         )
         let baseAttributeType: AttributeType
         if (isElementary(baseType)) {
@@ -96,7 +99,7 @@ export const parseStorageSectionFromAttribute = (
             enumValues: references?.enumValues,
         }
 
-        if (arrayLength > 1) {
+        if (arrayLength !== undefined && arrayLength > 1) {
             addArrayVariables(arrayLength, arrayItems, variables)
 
             variables.forEach((variable, i) => {
@@ -135,7 +138,7 @@ export const parseStorageSectionFromAttribute = (
     }
     if (attribute.attributeType === AttributeType.UserDefined) {
         const typeClass = findTypeClass(
-            attribute.type,
+            attribute.type!,
             attribute,
             umlClass,
             otherClasses,
@@ -155,7 +158,7 @@ export const parseStorageSectionFromAttribute = (
             )
             const storageSection = {
                 id: nextStorageId(),
-                name: attribute.type,
+                name: attribute.type!,
                 type: StorageSectionType.Struct,
                 variables,
                 mapping,
@@ -172,7 +175,7 @@ export const parseStorageSectionFromAttribute = (
         return undefined
     }
     if (attribute.attributeType === AttributeType.Mapping) {
-        const result = attribute.type.match(/=\\>((?!mapping)[\w$.]*)[\\[]/)
+        const result = attribute.type!.match(/=\\>((?!mapping)[\w$.]*)[\\[]/)
         if (result !== null && result[1] && !isElementary(result[1])) {
             const typeClass = findTypeClass(
                 result[1],

@@ -113,7 +113,7 @@ export const diffVerified2Local = async (
     }
 
     return {
-        files: files.sort((a, b) => a.filename.localeCompare(b.filename)),
+        files: files.sort((a, b) => a.filename!.localeCompare(b.filename!)),
         contractNameA,
     }
 }

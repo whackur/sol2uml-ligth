@@ -67,25 +67,27 @@ export const convertClasses2StorageSections = (
 
 export const optionStorageVariables = (
     contractName: string,
-    slotNames?: { name: string; offset: string }[],
+    slotNames?: { name?: string; offset: string }[],
     slotTypes?: string[],
 ): Variable[] => {
     if (!slotNames?.length) {
         return []
     }
-    if (!slotTypes.length) {
+    // A missing slotTypes throws a TypeError on .length below; kept as-is
+    let types = slotTypes as string[]
+    if (!types.length) {
         throw Error(
             `The slotTypes option must be used with the slotNames option`,
         )
     }
 
-    if (slotNames.length > 1 && slotTypes.length === 1) {
-        slotTypes = Array(slotNames.length).fill(slotTypes[0])
+    if (slotNames.length > 1 && types.length === 1) {
+        types = Array(slotNames.length).fill(types[0])
     }
 
     const variables: Variable[] = []
     slotNames.forEach((slotName, i) => {
-        const { size: byteSize, dynamic } = calcElementaryTypeSize(slotTypes[i])
+        const { size: byteSize, dynamic } = calcElementaryTypeSize(types[i])
         variables.push({
             id: nextVariableId(),
             fromSlot: undefined,
@@ -93,7 +95,7 @@ export const optionStorageVariables = (
             offset: slotName.offset,
             byteSize,
             byteOffset: 0,
-            type: slotTypes[i],
+            type: types[i],
             attributeType: AttributeType.Elementary,
             dynamic,
             getValue: true,
@@ -105,10 +107,10 @@ export const optionStorageVariables = (
         })
     })
     const sortedVariables = variables.sort((a, b) => {
-        if (a.offset < b.offset) {
+        if (a.offset! < b.offset!) {
             return -1
         }
-        if (a.offset > b.offset) {
+        if (a.offset! > b.offset!) {
             return 1
         }
         return 0

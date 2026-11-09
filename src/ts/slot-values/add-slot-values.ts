@@ -23,15 +23,16 @@ export const addSlotValues = async (
         if (variable.offset) {
             slots.push(BigInt(variable.offset))
         } else {
-            for (let i = 0; variable.fromSlot + i <= variable.toSlot; i++) {
+            // Variables without an offset come from the parser with slots set
+            for (let i = 0; variable.fromSlot! + i <= variable.toSlot!; i++) {
                 if (
                     variable.attributeType === AttributeType.Array &&
                     i >= arrayItems &&
-                    i < variable.toSlot - arrayItems
+                    i < variable.toSlot! - arrayItems
                 ) {
                     continue
                 }
-                slots.push(variable.fromSlot + i)
+                slots.push(variable.fromSlot! + i)
             }
         }
     })

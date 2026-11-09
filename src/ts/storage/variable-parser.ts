@@ -78,7 +78,7 @@ export const parseVariables = (
         const getValue = calcGetValue(attribute.attributeType, mapping)
 
         const lastVariable = variables[variables.length - 1]
-        const lastToSlot = lastVariable ? lastVariable.toSlot : 0
+        const lastToSlot = lastVariable ? lastVariable.toSlot! : 0
         const nextOffset = lastVariable
             ? lastVariable.byteOffset + lastVariable.byteSize
             : 0
@@ -103,8 +103,9 @@ export const parseVariables = (
             toSlot,
             byteSize,
             byteOffset,
-            type: attribute.type,
-            attributeType: attribute.attributeType,
+            // Contract and struct attributes always have a type
+            type: attribute.type!,
+            attributeType: attribute.attributeType!,
             dynamic,
             getValue,
             displayValue,

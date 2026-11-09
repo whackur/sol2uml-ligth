@@ -48,7 +48,7 @@ export const validateLineBuffer = (lineBufferParam: string): number => {
 
 export const validateSlotNames = (
     slotNames: string,
-): { name: string; offset: string }[] => {
+): { name?: string; offset: string }[] => {
     try {
         const slots = slotNames.split(',')
         const results = slots.map((slot) => {

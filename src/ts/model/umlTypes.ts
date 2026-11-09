@@ -39,7 +39,7 @@ export interface Import {
     absolutePath: string
     classNames: {
         className: string
-        alias?: string
+        alias?: string | null
     }[]
 }
 
@@ -56,7 +56,7 @@ export interface Attribute {
 
 export interface Parameter {
     // name is not required in return parameters or operator parameters
-    name?: string
+    name?: string | null
     type: string
 }
 
@@ -65,7 +65,7 @@ export interface Operator extends Attribute {
     stereotype?: OperatorStereotype
     parameters?: Parameter[]
     returnParameters?: Parameter[]
-    stateMutability?: string
+    stateMutability?: string | null
     modifiers?: string[]
     // Used by squashed classes
     hash?: string

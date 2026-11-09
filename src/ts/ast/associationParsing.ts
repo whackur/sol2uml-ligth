@@ -172,7 +172,10 @@ function addUserDefinedTypeAssociation(
     }
 }
 
-export function parseExpression(expression: Expression, umlClass: UmlClass) {
+export function parseExpression(
+    expression: Expression | null | undefined,
+    umlClass: UmlClass,
+) {
     if (!expression || !expression.type) {
         return
     }
@@ -192,7 +195,7 @@ export function parseExpression(expression: Expression, umlClass: UmlClass) {
                     attr.attributeType === AttributeType.UserDefined,
             )
             if (storageAttr) {
-                const { umlClassName } = parseClassName(storageAttr.type)
+                const { umlClassName } = parseClassName(storageAttr.type!)
                 umlClass.addAssociation({
                     referenceType: ReferenceType.Storage,
                     targetUmlClassName: umlClassName,

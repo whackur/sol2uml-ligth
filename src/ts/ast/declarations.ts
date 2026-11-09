@@ -36,9 +36,10 @@ export function parseStructDefinition(
     umlClass: UmlClass,
 ) {
     node.members.forEach((member: VariableDeclaration) => {
-        const [type, attributeType] = parseTypeName(member.typeName)
+        // Struct members always have a name and type
+        const [type, attributeType] = parseTypeName(member.typeName!)
         umlClass.attributes.push({
-            name: member.name,
+            name: member.name!,
             type,
             attributeType,
         })
@@ -79,14 +80,15 @@ export function parseContractDefinition(
             subNode.variables.forEach(
                 (variable: StateVariableDeclarationVariable) => {
                     const [type, attributeType] = parseTypeName(
-                        variable.typeName,
+                        variable.typeName!,
                     )
                     const valueStore =
                         variable.isDeclaredConst || variable.isImmutable
 
                     umlClass.attributes.push({
-                        visibility: parseVisibility(variable.visibility),
-                        name: variable.name,
+                        // The parser always sets visibility and name on state variables
+                        visibility: parseVisibility(variable.visibility!),
+                        name: variable.name!,
                         type,
                         attributeType,
                         compiled: valueStore,
@@ -95,7 +97,7 @@ export function parseContractDefinition(
                     if (variable.isDeclaredConst) {
                         if (variable?.expression?.type === 'NumberLiteral') {
                             umlClass.constants.push({
-                                name: variable.name,
+                                name: variable.name!,
                                 value: parseInt(variable.expression.number),
                             })
                         }
@@ -108,7 +110,9 @@ export function parseContractDefinition(
         } else if (isUsingForDeclaration(subNode)) {
             umlClass.addAssociation({
                 referenceType: ReferenceType.Memory,
-                targetUmlClassName: (<UsingForDeclaration>subNode).libraryName,
+                // libraryName is null for `using {f} for T`; kept as-is
+                targetUmlClassName: (<UsingForDeclaration>subNode)
+                    .libraryName as string,
             })
         } else if (isFunctionDefinition(subNode)) {
             if (subNode.isConstructor) {
@@ -135,7 +139,8 @@ export function parseContractDefinition(
 
                 umlClass.operators.push({
                     visibility: parseVisibility(subNode.visibility),
-                    name: subNode.name,
+                    // name is null for receive and fallback; kept as-is
+                    name: subNode.name as string,
                     stereotype,
                     parameters: parseParameters(subNode.parameters),
                     returnParameters: parseParameters(subNode.returnParameters),

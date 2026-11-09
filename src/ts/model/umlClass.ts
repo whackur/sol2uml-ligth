@@ -13,9 +13,10 @@ export class UmlClass implements ClassProperties {
     static idCounter = 0
 
     id: number
-    name: string
-    absolutePath: string
-    relativePath: string
+    // Assigned from properties by Object.assign in the constructor
+    name!: string
+    absolutePath!: string
+    relativePath!: string
     // Used for structs and enums
     parentId?: number
     imports: Import[] = []

@@ -4,6 +4,6 @@ export const combineCommandOptions = (
     command: Command,
     options: OptionValues,
 ): OptionValues => ({
-    ...command.parent.opts(),
+    ...command.parent!.opts(),
     ...options,
 })

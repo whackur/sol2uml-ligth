@@ -9,7 +9,7 @@ export type ParseStorageSection = (
     mapping: boolean,
     arrayItems: number,
     noExpandVariables: string[],
-) => { storageSection: StorageSection; enumValues?: string[] }
+) => { storageSection?: StorageSection; enumValues?: string[] } | undefined
 
 export type ParseVariables = (
     umlClass: UmlClass,

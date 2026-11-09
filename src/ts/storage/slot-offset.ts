@@ -7,11 +7,12 @@ export const calcSectionOffset = (
     sectionOffset = '0',
 ): string => {
     if (variable.dynamic) {
+        // Section-referencing variables come from the parser with slots set
         const hexStringOf32Bytes = zeroPadValue(
-            toBeHex(BigInt(variable.fromSlot) + BigInt(sectionOffset)),
+            toBeHex(BigInt(variable.fromSlot!) + BigInt(sectionOffset)),
             STORAGE_SLOT_BYTES,
         )
         return keccak256(hexStringOf32Bytes)
     }
-    return toBeHex(BigInt(variable.fromSlot) + BigInt(sectionOffset))
+    return toBeHex(BigInt(variable.fromSlot!) + BigInt(sectionOffset))
 }

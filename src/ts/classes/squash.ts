@@ -175,7 +175,7 @@ const reduceOperators = (operators: readonly Operator[]): Operator[] => {
         const operator = operators
             .filter((o) => o.hash === hash)
             // sort operators by inheritance position. smaller to highest
-            .sort((o) => o.inheritancePosition)
+            .sort((o) => o.inheritancePosition as number)
             // get last operator in the array
             .slice(-1)[0]
         newOperators.push(operator)

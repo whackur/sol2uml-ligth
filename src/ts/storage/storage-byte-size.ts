@@ -20,7 +20,8 @@ export const calcStorageByteSize = (
         // Fixed sized arrays are read from right to left until there is a dynamic dimension
         // eg address[][3][2] is a fixed size array that uses 6 slots.
         // while address [2][] is a dynamic sized array.
-        const arrayDimensions = attribute.type.match(/\[[\w$.]*]/g)
+        // Only enum members lack a type, and array type names always contain brackets
+        const arrayDimensions = attribute.type!.match(/\[[\w$.]*]/g)!
         // Remove first [ and last ] from each arrayDimensions
         const dimensionsStr = arrayDimensions.map((a) => a.slice(1, -1))
         // fixed-sized arrays are read from right to left so reverse the dimensions
@@ -49,7 +50,7 @@ export const calcStorageByteSize = (
 
         // If a fixed sized array
         let elementSize: number
-        const type = attribute.type.substring(0, attribute.type.indexOf('['))
+        const type = attribute.type!.substring(0, attribute.type!.indexOf('['))
         if (isElementary(type)) {
             const elementAttribute: Attribute = {
                 attributeType: AttributeType.Elementary,
@@ -113,7 +114,7 @@ export const calcStorageByteSize = (
     if (attribute.attributeType === AttributeType.UserDefined) {
         // Is the user defined type linked to another Contract, Struct or Enum?
         const attributeTypeClass = findTypeClass(
-            attribute.type,
+            attribute.type!,
             attribute,
             umlClass,
             otherClasses,
@@ -143,7 +144,7 @@ export const calcStorageByteSize = (
                     ) {
                         // UserDefined types can be a struct or enum, so we need to check if it's a struct
                         const userDefinedClass = findTypeClass(
-                            structAttribute.type,
+                            structAttribute.type!,
                             structAttribute,
                             attributeTypeClass,
                             otherClasses,
@@ -187,7 +188,7 @@ export const calcStorageByteSize = (
     }
 
     if (attribute.attributeType === AttributeType.Elementary) {
-        return calcElementaryTypeSize(attribute.type)
+        return calcElementaryTypeSize(attribute.type!)
     }
     throw new Error(
         `Failed to calc bytes size of attribute with name "${attribute.name}" and type ${attribute.type}`,

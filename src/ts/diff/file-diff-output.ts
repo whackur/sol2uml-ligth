@@ -39,7 +39,8 @@ export const displayFileDiffs = (
                 break
             case 'changed':
                 console.log(`Changed ${file.filename}`)
-                diffCode(file.aCode, file.bCode, options.lineBuffer)
+                // Changed files carry both code versions and callers pass DiffOptions.lineBuffer
+                diffCode(file.aCode!, file.bCode!, options.lineBuffer!)
                 break
             case 'removed':
                 console.log(`Removed ${file.filename}`)

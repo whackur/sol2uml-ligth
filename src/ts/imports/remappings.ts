@@ -3,7 +3,9 @@ import type { Remapping } from './remappingTypes.js'
 const debug = require('debug')('sol2uml-light')
 
 /** Parses remappings returned in Etherscan's source metadata. */
-export const parseRemappings = (rawMappings: string[]): Remapping[] => {
+export const parseRemappings = (
+    rawMappings: string[] | undefined,
+): Remapping[] => {
     if (!rawMappings) return []
     return rawMappings.map((mapping: string) => parseRemapping(mapping))
 }

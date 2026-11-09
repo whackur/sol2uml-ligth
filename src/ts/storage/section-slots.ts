@@ -8,8 +8,9 @@ export const adjustSlots = (
     storageSections: StorageSection[],
 ) => {
     storageSection.variables.forEach((variable) => {
-        variable.fromSlot += slotOffset
-        variable.toSlot += slotOffset
+        // Section variables come from the parser with slots set
+        variable.fromSlot! += slotOffset
+        variable.toSlot! += slotOffset
 
         const referenceStorageSection = storageSections.find(
             (ss) => ss.id === variable.referenceSectionId,
@@ -21,7 +22,7 @@ export const adjustSlots = (
             if (!variable.dynamic) {
                 adjustSlots(
                     referenceStorageSection,
-                    variable.fromSlot,
+                    variable.fromSlot!,
                     storageSections,
                 )
             } else if (variable.attributeType === AttributeType.Array) {

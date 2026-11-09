@@ -68,7 +68,7 @@ const dotOperators = (
     let dotString = vizGroup + ':\\l'
 
     const operatorsSortedByStereotype = operators.sort((a, b) => {
-        return b.stereotype - a.stereotype
+        return (b.stereotype as number) - (a.stereotype as number)
     })
     const operatorsFiltered = operatorsSortedByStereotype.filter(
         (o) =>
@@ -83,22 +83,31 @@ const dotOperators = (
     for (const operator of operatorsFiltered) {
         dotString += '\\ \\ \\ \\ '
 
-        if (operator.stereotype > 0) {
+        if (operator.stereotype !== undefined && operator.stereotype > 0) {
             dotString += dotOperatorStereotype(umlClass, operator.stereotype)
         }
 
         dotString += operator.name
         dotString += dotParameters(
-            operator.parameters,
+            // The Solidity parsers set parameters on every operator
+            operator.parameters!,
             false,
             options.hideTypes,
         )
 
-        if (operator.returnParameters?.length > 0 && !options.hideTypes) {
+        if (
+            operator.returnParameters &&
+            operator.returnParameters.length > 0 &&
+            !options.hideTypes
+        ) {
             dotString += ': ' + dotParameters(operator.returnParameters, true)
         }
 
-        if (options.hideModifiers === false && operator.modifiers?.length > 0) {
+        if (
+            options.hideModifiers === false &&
+            operator.modifiers &&
+            operator.modifiers.length > 0
+        ) {
             dotString += ` \\<\\<${operator.modifiers.join(', ')}\\>\\>`
         }
 

@@ -63,5 +63,5 @@ export const compareVerifiedSourceFiles = (
         }
     }
 
-    return files.sort((a, b) => a.filename.localeCompare(b.filename))
+    return files.sort((a, b) => a.filename!.localeCompare(b.filename!))
 }

@@ -40,7 +40,8 @@ export const parserUmlClasses = async (
 
         result = await etherscanParser.getUmlClasses(fileFolderAddress)
     } else {
-        const subfolders = parseInt(options.subfolders)
+        // An undefined value parses to NaN and is rejected below
+        const subfolders = parseInt(options.subfolders as string)
         if (isNaN(subfolders)) {
             console.error(
                 `subfolders option must be an integer. Not ${options.subfolders}`,

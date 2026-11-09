@@ -29,7 +29,7 @@ export function parseClassName(rawClassName: string): {
     }
 }
 
-export function parseVisibility(visibility: string): Visibility {
+export function parseVisibility(visibility: string | undefined): Visibility {
     switch (visibility) {
         case 'default':
             return Visibility.Public
@@ -61,7 +61,7 @@ export function parseTypeName(typeName: TypeName): [string, AttributeType] {
             const [arrayElementType] = parseTypeName(typeName.baseTypeName)
             let length: string = ''
             if (Number.isInteger(typeName.length)) {
-                length = typeName.length.toString()
+                length = typeName.length!.toString()
             } else if (typeName.length?.type === 'NumberLiteral') {
                 length = typeName.length.number
             } else if (typeName.length?.type === 'Identifier') {
@@ -86,7 +86,7 @@ export function parseTypeName(typeName: TypeName): [string, AttributeType] {
 }
 
 export function parseParameters(
-    params: readonly VariableDeclaration[],
+    params: readonly VariableDeclaration[] | null,
 ): Parameter[] {
     if (!params || !params) {
         return []
@@ -95,7 +95,8 @@ export function parseParameters(
     const parameters: Parameter[] = []
 
     for (const param of params) {
-        const [type] = parseTypeName(param.typeName)
+        // Function, event and error parameters always have a type
+        const [type] = parseTypeName(param.typeName!)
         parameters.push({
             name: param.name,
             type,

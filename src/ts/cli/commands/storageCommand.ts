@@ -104,14 +104,15 @@ WARNING: sol2uml-light does not use the Solidity compiler so may differ with sol
                 contractName = combinedOptions.contract || contractName
                 const arrayItems = parseInt(combinedOptions.array)
                 const storageSections = convertClasses2StorageSections(
-                    contractName,
+                    // Set by --contract for local files or by the explorer for addresses
+                    contractName!,
                     umlClasses,
                     arrayItems,
                     combinedOptions.contractFile,
                     options.hideExpand,
                 )
                 const optionVariables = optionStorageVariables(
-                    contractName,
+                    contractName!,
                     options.slotNames,
                     options.slotTypes,
                 )

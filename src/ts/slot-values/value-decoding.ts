@@ -12,7 +12,7 @@ const commify = (value: string): string => {
     return neg + whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + frac
 }
 
-export const parseValue = (variable: Variable): string => {
+export const parseValue = (variable: Variable): string | undefined => {
     if (!variable.slotValue) return undefined
     const start = 66 - (variable.byteOffset + variable.byteSize) * 2
     const end = 66 - variable.byteOffset * 2
@@ -44,7 +44,7 @@ export const parseValue = (variable: Variable): string => {
 const parseUserDefinedValue = (
     variable: Variable,
     variableValue: string,
-): string => {
+): string | undefined => {
     // TODO need to handle User Defined Value Types introduced in Solidity
     // https://docs.soliditylang.org/en/v0.8.38/types.html#user-defined-value-types
     // https://blog.soliditylang.org/2021/09/27/user-defined-value-types/
@@ -66,7 +66,7 @@ const parseUserDefinedValue = (
 const parseElementaryValue = (
     variable: Variable,
     variableValue: string,
-): string => {
+): string | undefined => {
     if (variable.type === 'bool') {
         if (variableValue === '00') return 'false'
         if (variableValue === '01') return 'true'
@@ -76,11 +76,12 @@ const parseElementaryValue = (
     }
     if (variable.type === 'string' || variable.type === 'bytes') {
         if (variable.dynamic) {
-            const lastByte = variable.slotValue.slice(-2)
+            // parseValue returns early when slotValue is not set
+            const lastByte = variable.slotValue!.slice(-2)
             const size = BigInt('0x' + lastByte)
             // Check if the last bit is set by AND the size with 0x01
             if ((size & 1n) === 1n) {
-                return ((BigInt(variable.slotValue) - 1n) / 2n).toString()
+                return ((BigInt(variable.slotValue!) - 1n) / 2n).toString()
             }
 
             // The last byte holds the length of the string or bytes in the slot
@@ -105,7 +106,8 @@ const parseElementaryValue = (
     if (variable.type.match(/^int([0-9]*)/)) {
         let rawValue = BigInt('0x' + variableValue)
 
-        const result = variable.type.match(/^int([0-9]*$)/)
+        // Elementary int type names end with their optional bit size
+        const result = variable.type.match(/^int([0-9]*$)/)!
         const bitSize = result[1] ? Number(result[1]) : 256
         const hexSize = bitSize / 4
         const mask = BigInt('0x80' + '0'.repeat(hexSize - 2))
