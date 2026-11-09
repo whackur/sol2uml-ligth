@@ -73,17 +73,16 @@ export const optionStorageVariables = (
     if (!slotNames?.length) {
         return []
     }
-    // A missing slotTypes throws a TypeError on .length below; kept as-is
-    let types = slotTypes as string[]
-    if (!types.length) {
+    if (!slotTypes?.length) {
         throw Error(
             `The slotTypes option must be used with the slotNames option`,
         )
     }
 
-    if (slotNames.length > 1 && types.length === 1) {
-        types = Array(slotNames.length).fill(types[0])
-    }
+    const types =
+        slotNames.length > 1 && slotTypes.length === 1
+            ? Array(slotNames.length).fill(slotTypes[0])
+            : slotTypes
 
     const variables: Variable[] = []
     slotNames.forEach((slotName, i) => {

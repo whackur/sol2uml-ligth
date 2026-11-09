@@ -60,7 +60,7 @@ describe('Etherscan source response parsing', () => {
         ])
     })
 
-    test('keeps flat-source remappings undefined', () => {
+    test('returns empty remappings for a flat source', () => {
         const result = decodeSourceCodeResponse(
             {
                 result: [
@@ -77,7 +77,7 @@ describe('Etherscan source response parsing', () => {
         expect(result.files).toEqual([
             { filename: '0x123', code: 'pragma solidity 0.8.38;' },
         ])
-        expect(result.remappings).toBeUndefined()
+        expect(result.remappings).toEqual([])
     })
 
     test('filters multi-file source by basename', () => {
