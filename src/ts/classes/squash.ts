@@ -174,9 +174,11 @@ const reduceOperators = (operators: readonly Operator[]): Operator[] => {
     for (const hash of hashes) {
         const operator = operators
             .filter((o) => o.hash === hash)
-            // sort operators by inheritance position. smaller to highest
-            .sort((o) => o.inheritancePosition as number)
-            // get last operator in the array
+            // More derived contracts have higher positions, so the last one is the effective override.
+            .sort(
+                (a, b) =>
+                    (a.inheritancePosition ?? 0) - (b.inheritancePosition ?? 0),
+            )
             .slice(-1)[0]
         newOperators.push(operator)
     }
