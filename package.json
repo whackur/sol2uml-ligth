@@ -18,9 +18,11 @@
         "prettier": "prettier --write src/**/*.ts **/*.md",
         "prettier:check": "prettier --check src/**/*.ts  **/*.md",
         "test": "jest --runInBand",
+        "test:release": "node --test scripts/__tests__/release.test.cjs",
         "test:integration": "jest --runInBand --testRegex '/__tests__/.*\\.integration\\.test\\.ts$'",
         "test:libraries": "jest --runInBand --runTestsByPath src/ts/__tests__/currentLibraries.test.ts",
         "prepack": "pnpm run build && pnpm run permit",
+        "release": "node scripts/release.cjs",
         "test:solidity": "jest --runInBand --runTestsByPath src/ts/__tests__/modernSolidity.test.ts",
         "examples:build": "pnpm run build && node scripts/generate-examples.cjs"
     },

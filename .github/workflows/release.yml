@@ -1,0 +1,114 @@
+name: Release
+
+on:
+    push:
+        tags:
+            - 'v*'
+
+permissions:
+    contents: read
+
+concurrency:
+    group: release-sol2uml-light
+    cancel-in-progress: false
+    queue: max
+
+jobs:
+    verify:
+        runs-on: ubuntu-latest
+        outputs:
+            tag: ${{ steps.verify.outputs.tag }}
+            version: ${{ steps.verify.outputs.version }}
+            sha: ${{ steps.verify.outputs.sha }}
+            artifact_name: ${{ steps.verify.outputs.artifact_name }}
+            filename: ${{ steps.pack.outputs.filename }}
+            integrity: ${{ steps.pack.outputs.integrity }}
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: '24'
+                  package-manager-cache: false
+            - uses: pnpm/action-setup@v6
+              with:
+                  version: 12.18.0
+                  run_install: false
+            - name: Verify release tag
+              id: verify
+              run: node scripts/release-ci.cjs verify-tag
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm lint
+            - run: pnpm build
+            - run: pnpm test
+            - run: pnpm test:release
+            - name: Pack release archive
+              id: pack
+              env:
+                  RELEASE_PACK_DIR: ${{ runner.temp }}
+              run: node scripts/release-ci.cjs pack "$RELEASE_PACK_DIR"
+            - name: Smoke test installed archive
+              env:
+                  RELEASE_TARBALL: ${{ runner.temp }}/${{ steps.pack.outputs.filename }}
+              run: node scripts/release-ci.cjs smoke "$RELEASE_TARBALL"
+            - uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ steps.verify.outputs.artifact_name }}
+                  path: ${{ runner.temp }}/${{ steps.pack.outputs.filename }}
+                  if-no-files-found: error
+                  retention-days: 7
+
+    publish:
+        needs: verify
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  ref: ${{ needs.verify.outputs.sha }}
+                  fetch-depth: 1
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: '24'
+                  registry-url: 'https://registry.npmjs.org'
+                  package-manager-cache: false
+            - uses: actions/download-artifact@v4
+              with:
+                  name: ${{ needs.verify.outputs.artifact_name }}
+                  path: ${{ runner.temp }}/release-package
+            - name: Publish tested archive to npm
+              env:
+                  GITHUB_REF_NAME: ${{ needs.verify.outputs.tag }}
+                  RELEASE_TARBALL: ${{ runner.temp }}/release-package/${{ needs.verify.outputs.filename }}
+                  RELEASE_INTEGRITY: ${{ needs.verify.outputs.integrity }}
+              run: node scripts/release-ci.cjs publish "$RELEASE_TARBALL" "$RELEASE_INTEGRITY"
+
+    github-release:
+        needs: [verify, publish]
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  ref: ${{ needs.verify.outputs.tag }}
+                  fetch-depth: 0
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: '24'
+                  package-manager-cache: false
+            - uses: actions/download-artifact@v4
+              with:
+                  name: ${{ needs.verify.outputs.artifact_name }}
+                  path: ${{ runner.temp }}/release-package
+            - name: Create or complete GitHub Release
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  GITHUB_REF_NAME: ${{ needs.verify.outputs.tag }}
+                  RELEASE_TARBALL: ${{ runner.temp }}/release-package/${{ needs.verify.outputs.filename }}
+                  RELEASE_INTEGRITY: ${{ needs.verify.outputs.integrity }}
+                  RELEASE_SHA: ${{ needs.verify.outputs.sha }}
+              run: node scripts/release-ci.cjs github-release "$RELEASE_TARBALL" "$RELEASE_INTEGRITY" "$RELEASE_SHA"

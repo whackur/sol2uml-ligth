@@ -19,7 +19,7 @@ The storage gallery includes regenerated local contract layouts, the file-level 
 The package requires [Node.js](https://nodejs.org/en/download/) 24 or newer. Install the CLI globally with [pnpm](https://pnpm.io/) 12:
 
 ```bash
-pnpm add --global sol2uml-light@0.1.0
+pnpm add --global sol2uml-light
 sol2uml-light --help
 ```
 
@@ -28,7 +28,7 @@ If pnpm reports `ERR_PNPM_GLOBAL_BIN_DIR_NOT_IN_PATH`, run `pnpm setup` and rest
 To run the CLI once without a global install:
 
 ```bash
-pnpm dlx --package=sol2uml-light@0.1.0 sol2uml-light --help
+pnpm dlx --package=sol2uml-light sol2uml-light --help
 ```
 
 To build and run the CLI from this checkout:
@@ -113,6 +113,8 @@ node lib/sol2uml.js storage ./src/contracts/storage -c BasicStorage -sc deeppink
 The 2.x release introduced subcommands and contract storage diagrams. See [version 2.x changes](./version2.md) for changes from 1.x.
 
 ## Contribution
+
+Maintainers can create patch, minor, and major releases with `pnpm release patch|minor|major`; see the [release guide](./RELEASE.md) for preconditions, npm trusted publishing setup, and recovery steps.
 
 The maintained source is grouped into AST/import handling, storage layout and RPC values, explorer/filesystem access, CLI commands, domain models, diagrams, and diff reporting. Existing top-level and deep module paths remain compatibility facades, including `lib/diff`.
 
