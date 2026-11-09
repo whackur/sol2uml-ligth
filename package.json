@@ -36,13 +36,10 @@
         "@noble/hashes": "^1.8.0",
         "@resvg/resvg-js": "^2.6.2",
         "@solidity-parser/parser": "^0.20.2",
-        "axios": "^1.13.6",
-        "axios-debug-log": "^1.0.0",
         "cli-color": "^2.0.4",
         "commander": "^12.1.0",
         "debug": "^4.4.1",
         "diff-match-patch": "^1.0.5",
-        "ethers": "^6.16.0",
         "js-graph-algorithms": "^1.0.18",
         "klaw": "^4.1.0"
     },

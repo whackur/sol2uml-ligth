@@ -1,19 +1,11 @@
-import axios from 'axios'
-import { JsonRpcProvider, toQuantity } from 'ethers'
-import type { BigNumberish } from 'ethers'
+import type { BigNumberish } from '../utils/evm.js'
+import { toQuantity } from '../utils/evm.js'
+import { redactUrl } from '../utils/http.js'
+import { assertHexData, rpcBatch, rpcRequest } from '../utils/jsonRpc.js'
 import { SlotValueCache } from '../SlotValueCache.js'
-
-interface StorageAtResponse {
-    jsonrpc: '2.0'
-    id: string
-    result?: string
-    error?: { code: number; message: string }
-}
 
 const debug = require('debug')('sol2uml-light')
 
-// JSON-RPC batch IDs continue across calls in the process.
-let jsonRpcId = 0
 export const getSlotValues = async (
     url: string,
     contractAddress: string,
@@ -34,11 +26,12 @@ export const getSlotValues = async (
             return cachedValues
         }
 
-        const provider = new JsonRpcProvider(url)
-
-        const code = await provider.getCode(contractAddress, block)
+        const code = assertHexData(
+            await rpcRequest(url, 'eth_getCode', [contractAddress, block]),
+            'eth_getCode',
+        )
         if (!code || code === '0x') {
-            const msg = `Address ${contractAddress} has no code. Check your "-u, --url" option or "NODE_URL" environment variable is pointing to the correct node.\nurl: ${url}`
+            const msg = `Address ${contractAddress} has no code. Check your "-u, --url" option or "NODE_URL" environment variable is pointing to the correct node.\nurl: ${redactUrl(url)}`
             console.error(msg)
             throw Error(msg)
         }
@@ -48,35 +41,20 @@ export const getSlotValues = async (
                 slotKeys.length
             } storage values for ${contractAddress} at block ${blockTag} from slot ${missingKeys[0].toString()}`,
         )
-        const payload = missingKeys.map((key) => ({
-            id: (jsonRpcId++).toString(),
-            jsonrpc: '2.0',
-            method: 'eth_getStorageAt',
-            params: [contractAddress, key, block],
-        }))
-        const response = await axios.post(url, payload)
-
-        if (response.data?.error?.message) {
-            throw Error(response.data.error.message)
-        }
-        if (response.data.length !== missingKeys.length) {
-            throw Error(
-                `Requested ${missingKeys.length} storage slot values but only got ${response.data.length}`,
-            )
-        }
-        const responseData = response.data as StorageAtResponse[]
-        // Batch responses can arrive in a different order than their requests.
-        const sortedResponses = responseData.sort(
-            (a, b) => Number(a.id) - Number(b.id),
+        const results = await rpcBatch(
+            url,
+            missingKeys.map((key) => ({
+                method: 'eth_getStorageAt',
+                params: [contractAddress, key, block],
+            })),
         )
-        const missingValues = sortedResponses.map((data) => {
-            if (data.error) {
-                throw Error(
-                    `json rpc call with id ${data.id} failed to get storage values: ${data.error?.message}`,
-                )
-            }
-            return '0x' + data.result.toUpperCase().slice(2)
-        })
+        const missingValues = results.map(
+            (result) =>
+                '0x' +
+                assertHexData(result, 'eth_getStorageAt')
+                    .toUpperCase()
+                    .slice(2),
+        )
         return SlotValueCache.addSlotValues(
             slotKeys,
             missingKeys,
@@ -84,7 +62,7 @@ export const getSlotValues = async (
         )
     } catch (err) {
         throw Error(
-            `Failed to get ${slotKeys.length} storage values for contract ${contractAddress} from ${url}`,
+            `Failed to get ${slotKeys.length} storage values for contract ${contractAddress} from ${redactUrl(url)}`,
             { cause: err },
         )
     }

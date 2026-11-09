@@ -20,7 +20,7 @@ export const runCli = async (argv: string[] = process.argv): Promise<void> => {
     registerDiffCommand(program)
 
     program.on('option:verbose', () => {
-        debugControl.enable('sol2uml-light,axios')
+        debugControl.enable('sol2uml-light')
         debug('verbose on')
     })
 

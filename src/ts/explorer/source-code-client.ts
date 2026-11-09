@@ -1,42 +1,41 @@
-import axios from 'axios'
-import type { AxiosResponse } from 'axios'
-
+import { fetchJson, HttpRequestError, redactUrl } from '../utils/http.js'
 import {
     EXPLORER_RATE_LIMIT_RETRY_DELAY_MS,
     EXPLORER_SOURCE_CODE_MAX_RETRIES,
 } from './constants.js'
 
-require('axios-debug-log')
 const debug = require('debug')('sol2uml-light')
 
 export const requestSourceCode = async (
     url: string,
     apiKey: string | undefined,
     contractAddress: string,
-): Promise<AxiosResponse<unknown>> => {
+): Promise<unknown> => {
     debug(
-        `About to get Solidity source code for ${contractAddress} from ${url}`,
+        `About to get Solidity source code for ${contractAddress} from ${redactUrl(url)}`,
     )
 
-    let response: AxiosResponse<unknown> | undefined
+    let requestUrl: URL
+    try {
+        requestUrl = new URL(url)
+    } catch {
+        throw new HttpRequestError('invalid-url', url)
+    }
+    requestUrl.searchParams.set('module', 'contract')
+    requestUrl.searchParams.set('action', 'getsourcecode')
+    requestUrl.searchParams.set('address', contractAddress)
+    if (apiKey) requestUrl.searchParams.set('apikey', apiKey)
+
+    let data: unknown
     for (
         let attempt = 1;
         attempt <= EXPLORER_SOURCE_CODE_MAX_RETRIES;
         attempt++
     ) {
-        response = await axios.get<unknown>(url, {
-            params: {
-                module: 'contract',
-                action: 'getsourcecode',
-                address: contractAddress,
-                apikey: apiKey,
-            },
-        })
+        data = await fetchJson(requestUrl)
 
-        const responseData = response.data as { result?: unknown } | null
-        const result = responseData?.result
+        const result = (data as { result?: unknown } | null)?.result
         if (
-            !Array.isArray(result) &&
             typeof result === 'string' &&
             result.includes('rate limit') &&
             attempt < EXPLORER_SOURCE_CODE_MAX_RETRIES
@@ -51,5 +50,5 @@ export const requestSourceCode = async (
         break
     }
 
-    return response as AxiosResponse<unknown>
+    return data
 }

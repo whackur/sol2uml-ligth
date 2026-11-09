@@ -14,6 +14,7 @@ import { flattenSolidityFiles } from './solidity-code.js'
 import { setChainId } from './networks.js'
 import type { Network } from './networks.js'
 import { ETHERSCAN_API_URL } from './constants.js'
+import { HttpRequestError, HttpStatusError } from '../utils/http.js'
 
 const debug = require('debug')('sol2uml-light')
 
@@ -91,30 +92,25 @@ export class EtherscanParser {
     ): Promise<ExplorerSourceCode> {
         const description = `get verified source code for address ${contractAddress} from Etherscan API.`
 
+        let data: unknown
         try {
-            const response = await requestSourceCode(
+            data = await requestSourceCode(
                 this.url,
                 this.apiKey,
                 contractAddress,
             )
-            return decodeSourceCodeResponse(
-                response.data,
-                contractAddress,
-                filename,
-            )
         } catch (err) {
-            if (err.message) {
-                throw err
+            if (
+                err instanceof HttpStatusError ||
+                err instanceof HttpRequestError
+            ) {
+                throw new Error(`Failed to ${description} ${err.message}`, {
+                    cause: err,
+                })
             }
-            if (!err.response) {
-                // eslint-disable-next-line preserve-caught-error -- Preserve the transport error shape without exposing request details.
-                throw new Error(`Failed to ${description}. No HTTP response.`)
-            }
-            throw new Error(
-                `Failed to ${description}. HTTP status code ${err.response?.status}, status text: ${err.response?.statusText}`,
-                { cause: err },
-            )
+            throw err
         }
+        return decodeSourceCodeResponse(data, contractAddress, filename)
     }
 
     private async parseUmlClasses(
