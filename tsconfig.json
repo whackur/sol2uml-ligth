@@ -3,7 +3,8 @@
         "composite": true,
 
         "esModuleInterop": true,
-        "strict": false,
+        "strict": true,
+        "strictNullChecks": false,
         "types": ["node", "jest"],
         "lib": ["ES2022"],
         "module": "Node16",
