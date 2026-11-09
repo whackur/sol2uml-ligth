@@ -1,5 +1,5 @@
 import type { UmlClass } from '../umlClass.js'
-import { topologicalSortClasses } from '../filterClasses.js'
+import { topologicalSortClasses } from '../classes/filter.js'
 import { parseSolidityVersion } from './solidity-version.js'
 import type { ExplorerSourceFile } from './source-code-types.js'
 

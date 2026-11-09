@@ -124,7 +124,7 @@ The 2.x release introduced subcommands and contract storage diagrams. See [versi
 
 Maintainers can create patch, minor, and major releases with `pnpm release patch|minor|major`; see the [release guide](./RELEASE.md) for preconditions, npm trusted publishing setup, and recovery steps.
 
-The maintained source is grouped into AST/import handling, storage layout and RPC values, explorer/filesystem access, CLI commands, domain models, diagrams, and diff reporting. Existing top-level and deep module paths remain compatibility facades, including `lib/diff`.
+The maintained source is grouped by responsibility: `ast/` and `imports/` for parsing, `model/` and `classes/` for UML classes and class-graph operations, `storage/` and `slot-values/` for storage layout and on-chain values, `explorer/`, `filesystem/`, `parsing/`, and `network/` for source and node access, `diagram/` and `output/` for DOT generation, rendering, and file writing, `diff/` for source comparison, and `cli/` for commands. Existing top-level and deep module paths remain compatibility facades, including `lib/diff`.
 
 Development tooling and the CLI runtime require Node.js 24 or newer. TypeScript stays on 6.0 for compatibility with the current test and lint peers. Commander stays on 12 to preserve documented multi-character short flags. OpenZeppelin examples and fixtures use the stable 5.6.1 release; the checked-in Account Abstraction diagrams use contracts 0.8.0.
 

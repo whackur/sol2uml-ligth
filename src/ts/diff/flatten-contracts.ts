@@ -1,5 +1,5 @@
 import type { EtherscanParser } from '../explorer/etherscan-parser.js'
-import { writeSourceCode } from '../writerFiles.js'
+import { writeSourceCode } from '../output/writer.js'
 import { diffCode } from './code-diff-output.js'
 import type { DiffOptions } from './types.js'
 

@@ -2,7 +2,7 @@ import { inspect } from 'util'
 import { fetchJson, HttpRequestError, redactUrl } from '../http.js'
 import { getBlock } from '../block.js'
 import { getSlotValues } from '../../slotValues.js'
-import { SlotValueCache } from '../../SlotValueCache.js'
+import { SlotValueCache } from '../../slot-values/slot-value-cache.js'
 import { EtherscanParser } from '../../parserEtherscan.js'
 
 const secret = 'super-secret-key'

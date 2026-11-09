@@ -1,4 +1,4 @@
-import { fetchJson, HttpRequestError, redactUrl } from '../utils/http.js'
+import { fetchJson, HttpRequestError, redactUrl } from '../network/http.js'
 import {
     EXPLORER_RATE_LIMIT_RETRY_DELAY_MS,
     EXPLORER_SOURCE_CODE_MAX_RETRIES,

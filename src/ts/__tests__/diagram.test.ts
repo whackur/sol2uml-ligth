@@ -1,4 +1,4 @@
-import { convertClass2Dot } from '../converterClass2Dot.js'
+import { convertClass2Dot } from '../diagram/classToDot.js'
 import {
     ClassStereotype,
     OperatorStereotype,

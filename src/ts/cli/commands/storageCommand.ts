@@ -5,12 +5,12 @@ import {
     convertClasses2StorageSections,
     optionStorageVariables,
 } from '../../converterClasses2Storage.js'
-import { convertStorages2Dot } from '../../converterStorage2Dot.js'
-import { parserUmlClasses } from '../../parserGeneral.js'
+import { convertStorages2Dot } from '../../diagram/storageToDot.js'
+import { parserUmlClasses } from '../../parsing/parserGeneral.js'
 import { addSlotValues } from '../../slotValues.js'
 import { isAddress } from '../../utils/regEx.js'
-import { writeOutputFiles } from '../../writerFiles.js'
-import { getBlock } from '../../utils/block.js'
+import { writeOutputFiles } from '../../output/writer.js'
+import { getBlock } from '../../network/block.js'
 import {
     validateAddress,
     validateNames,

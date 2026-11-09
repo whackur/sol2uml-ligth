@@ -1,6 +1,6 @@
 import { AttributeType } from '../umlClass.js'
 import type { UmlClass } from '../umlClass.js'
-import { findAssociatedClass } from '../associations.js'
+import { findAssociatedClass } from '../classes/associations.js'
 import { calcStorageByteSize } from './storage-byte-size.js'
 import { calcDisplayValue, calcGetValue } from './value-rules.js'
 import { STORAGE_SLOT_BYTES } from './constants.js'

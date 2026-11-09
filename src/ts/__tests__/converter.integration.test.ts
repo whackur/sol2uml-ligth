@@ -1,5 +1,5 @@
 import { convertUmlClasses2Dot, EtherscanParser } from '../index.js'
-import { convertDot2Svg } from '../writerFiles.js'
+import { convertDot2Svg } from '../output/writer.js'
 
 const etherDelta = '0x8d12A197cB00D4747a1fe03395095ce2A5CC6819'
 

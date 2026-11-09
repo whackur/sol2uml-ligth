@@ -1,4 +1,4 @@
-import { findAssociatedClass } from '../associations.js'
+import { findAssociatedClass } from '../classes/associations.js'
 import { ClassStereotype, ReferenceType, UmlClass } from '../umlClass.js'
 
 const makeClass = (

@@ -22,7 +22,7 @@ import {
     isStateVariableDeclaration,
     isStructDefinition,
     isUsingForDeclaration,
-} from '../typeGuards.js'
+} from './typeGuards.js'
 import { addAssociations } from './associationParsing.js'
 import {
     parseParameters,

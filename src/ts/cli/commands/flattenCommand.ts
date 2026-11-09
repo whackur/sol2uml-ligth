@@ -1,6 +1,6 @@
 import type { Command } from 'commander'
 import { EtherscanParser } from '../../parserEtherscan.js'
-import { writeSourceCode } from '../../writerFiles.js'
+import { writeSourceCode } from '../../output/writer.js'
 import { combineCommandOptions } from '../combinedOptions.js'
 import { validateAddress } from '../optionValidators.js'
 

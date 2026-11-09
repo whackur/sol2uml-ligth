@@ -1,5 +1,5 @@
 import { readFile } from 'fs'
-import { convertDot2Svg } from '../writerFiles.js'
+import { convertDot2Svg } from '../output/writer.js'
 
 describe('Converter', () => {
     test('converts a valid DOT fixture to SVG', (done) => {

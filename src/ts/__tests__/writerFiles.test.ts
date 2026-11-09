@@ -1,8 +1,8 @@
 import { mkdtemp, readFile, rm } from 'fs/promises'
 import os from 'os'
 import path from 'path'
-import { convertDot2Svg, writeOutputFiles, writePng } from '../writerFiles'
-import { renderSvg } from '../svgRenderer'
+import { convertDot2Svg, writeOutputFiles, writePng } from '../output/writer'
+import { renderSvg } from '../output/svgRenderer'
 
 const dot = `digraph G {
     graph [bgcolor="white"];

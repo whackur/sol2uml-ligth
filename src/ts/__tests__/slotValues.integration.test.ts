@@ -1,5 +1,5 @@
 import { getSlotValue, getSlotValues } from '../slotValues.js'
-import { SlotValueCache } from '../SlotValueCache.js'
+import { SlotValueCache } from '../slot-values/slot-value-cache.js'
 
 const emissionController = '0xBa69e6FC7Df49a3b75b565068Fb91ff2d9d91780'
 const usdc = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'

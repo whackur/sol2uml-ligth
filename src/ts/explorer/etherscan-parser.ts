@@ -14,7 +14,7 @@ import { flattenSolidityFiles } from './solidity-code.js'
 import { setChainId } from './networks.js'
 import type { Network } from './networks.js'
 import { ETHERSCAN_API_URL } from './constants.js'
-import { HttpRequestError, HttpStatusError } from '../utils/http.js'
+import { HttpRequestError, HttpStatusError } from '../network/http.js'
 
 const debug = require('debug')('sol2uml-light')
 

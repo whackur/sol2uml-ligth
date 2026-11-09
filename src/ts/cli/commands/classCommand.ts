@@ -1,13 +1,13 @@
 import { Option } from 'commander'
 import type { Command } from 'commander'
-import { convertUmlClasses2Dot } from '../../converterClasses2Dot.js'
+import { convertUmlClasses2Dot } from '../../diagram/classesToDot.js'
 import {
     filterHiddenClasses,
     classesConnectedToBaseContracts,
-} from '../../filterClasses.js'
-import { parserUmlClasses } from '../../parserGeneral.js'
-import { squashUmlClasses } from '../../squashClasses.js'
-import { writeOutputFiles } from '../../writerFiles.js'
+} from '../../classes/filter.js'
+import { parserUmlClasses } from '../../parsing/parserGeneral.js'
+import { squashUmlClasses } from '../../classes/squash.js'
+import { writeOutputFiles } from '../../output/writer.js'
 import { validateNames } from '../optionValidators.js'
 import { argumentText } from '../argumentText.js'
 import { combineCommandOptions } from '../combinedOptions.js'

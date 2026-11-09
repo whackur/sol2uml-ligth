@@ -1,6 +1,6 @@
 import { ReferenceType } from '../umlClass.js'
 import type { Attribute, UmlClass } from '../umlClass.js'
-import { findAssociatedClass } from '../associations.js'
+import { findAssociatedClass } from '../classes/associations.js'
 
 export const findTypeClass = (
     userType: string,

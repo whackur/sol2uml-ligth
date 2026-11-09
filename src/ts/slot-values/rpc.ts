@@ -1,8 +1,8 @@
 import type { BigNumberish } from '../utils/evm.js'
 import { toQuantity } from '../utils/evm.js'
-import { redactUrl } from '../utils/http.js'
-import { assertHexData, rpcBatch, rpcRequest } from '../utils/jsonRpc.js'
-import { SlotValueCache } from '../SlotValueCache.js'
+import { redactUrl } from '../network/http.js'
+import { assertHexData, rpcBatch, rpcRequest } from '../network/jsonRpc.js'
+import { SlotValueCache } from './slot-value-cache.js'
 
 const debug = require('debug')('sol2uml-light')
 

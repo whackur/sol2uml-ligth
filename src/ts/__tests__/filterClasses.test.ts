@@ -2,7 +2,7 @@ import {
     classesConnectedToBaseContracts,
     filterHiddenClasses,
     topologicalSortClasses,
-} from '../filterClasses.js'
+} from '../classes/filter.js'
 import { ClassStereotype, ReferenceType, UmlClass } from '../umlClass.js'
 
 const initialIdCounter = UmlClass.idCounter

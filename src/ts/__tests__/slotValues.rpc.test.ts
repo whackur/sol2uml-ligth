@@ -1,6 +1,6 @@
-import { SlotValueCache } from '../SlotValueCache.js'
+import { SlotValueCache } from '../slot-values/slot-value-cache.js'
 import { getSlotValues } from '../slotValues.js'
-import { RPC_BATCH_SIZE } from '../utils/jsonRpc.js'
+import { RPC_BATCH_SIZE } from '../network/jsonRpc.js'
 
 const rpcUrl = 'https://rpc.example.test/v2/secret-key'
 const contractAddress = '0x0000000000000000000000000000000000000001'
