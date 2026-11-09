@@ -20,7 +20,7 @@
 <text text-anchor="start" x="8" y="-470.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;owner: address &lt;&lt;SimpleAccount&gt;&gt;</text>
 <polyline fill="none" stroke="black" points="0,-462.1 866.41,-462.1 "/>
 <text text-anchor="start" x="8" y="-445.5" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="8" y="-428.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null() &lt;&lt;SimpleAccount&gt;&gt;</text>
+<text text-anchor="start" x="8" y="-428.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; receive() &lt;&lt;SimpleAccount&gt;&gt;</text>
 <text text-anchor="start" x="8" y="-411.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;validateUserOp(userOp: PackedUserOperation, userOpHash: bytes32, missingAccountFunds: uint256): (validationData: uint256) &lt;&lt;BaseAccount&gt;&gt;</text>
 <text text-anchor="start" x="8" y="-395.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;execute(target: address, value: uint256, data: bytes) &lt;&lt;BaseAccount&gt;&gt;</text>
 <text text-anchor="start" x="8" y="-378.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;executeBatch(calls: Call[]) &lt;&lt;BaseAccount&gt;&gt;</text>

@@ -242,7 +242,7 @@
 <text text-anchor="start" x="20125.43" y="-193.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_incrementDeposit(account: address, amount: uint256): uint256</text>
 <text text-anchor="start" x="20125.43" y="-176.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_tryDecrementDeposit(account: address, amount: uint256): bool</text>
 <text text-anchor="start" x="20125.43" y="-159.9" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="20125.43" y="-143.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="20125.43" y="-143.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; receive()</text>
 <text text-anchor="start" x="20125.43" y="-126.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; addStake(unstakeDelaySec: uint32)</text>
 <text text-anchor="start" x="20125.43" y="-109.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;getDepositInfo(account: address): (info: DepositInfo)</text>
 <text text-anchor="start" x="20125.43" y="-92.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;unlockStake()</text>
@@ -704,7 +704,7 @@
 <text text-anchor="start" x="19230.24" y="-2203.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_checkEntryPoint()</text>
 <text text-anchor="start" x="19230.24" y="-2186.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_checkEntryPointOrSelf()</text>
 <text text-anchor="start" x="19230.24" y="-2169.7" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="19230.24" y="-2152.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="19230.24" y="-2152.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; receive()</text>
 <text text-anchor="start" x="19230.24" y="-2136.1" font-family="Times,serif" font-size="14.00">Public:</text>
 <text text-anchor="start" x="19230.24" y="-2119.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;modifier&gt;&gt; onlyEntryPointOrSelf()</text>
 <text text-anchor="start" x="19230.24" y="-2102.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;modifier&gt;&gt; onlyEntryPoint()</text>
@@ -777,7 +777,7 @@
 <text text-anchor="start" x="19271.86" y="-1155.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_decodeFallbackData(data: bytes): (selector: bytes4, remaining: bytes)</text>
 <text text-anchor="start" x="19271.86" y="-1138.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_rawSignatureValidation(bytes32, bytes): bool</text>
 <text text-anchor="start" x="19271.86" y="-1121.9" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="19271.86" y="-1105.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null(bytes): bytes</text>
+<text text-anchor="start" x="19271.86" y="-1105.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;fallback&gt;&gt; fallback(bytes): bytes</text>
 <text text-anchor="start" x="19271.86" y="-1088.3" font-family="Times,serif" font-size="14.00">Public:</text>
 <text text-anchor="start" x="19271.86" y="-1071.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; execute(mode: bytes32, executionCalldata: bytes) &lt;&lt;onlyEntryPointOrSelf&gt;&gt;</text>
 <text text-anchor="start" x="19271.86" y="-1054.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; executeFromExecutor(mode: bytes32, executionCalldata: bytes): (returnData: bytes[]) &lt;&lt;onlyModule&gt;&gt;</text>
@@ -1096,7 +1096,7 @@
 <text text-anchor="start" x="15369.93" y="-2224.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_isValidDescriptionForProposer(proposer: address, description: string): bool</text>
 <text text-anchor="start" x="15369.93" y="-2207.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_validateCancel(proposalId: uint256, caller: address): bool</text>
 <text text-anchor="start" x="15369.93" y="-2190.9" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="15369.93" y="-2174.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="15369.93" y="-2174.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; receive()</text>
 <text text-anchor="start" x="15369.93" y="-2157.3" font-family="Times,serif" font-size="14.00">Public:</text>
 <text text-anchor="start" x="15369.93" y="-2140.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;abstract&gt;&gt; clock(): uint48</text>
 <text text-anchor="start" x="15369.93" y="-2123.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;abstract&gt;&gt; CLOCK_MODE(): string</text>
@@ -2036,7 +2036,7 @@
 <text text-anchor="start" x="25077.25" y="-147.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_delegate(implementation: address)</text>
 <text text-anchor="start" x="25077.25" y="-130.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_fallback()</text>
 <text text-anchor="start" x="25077.25" y="-113.5" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="25077.25" y="-96.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="25077.25" y="-96.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;fallback&gt;&gt; fallback()</text>
 </g>
 <!-- 242 -->
 <g id="node86" class="node">

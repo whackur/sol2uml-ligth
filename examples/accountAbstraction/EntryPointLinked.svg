@@ -267,7 +267,7 @@
 <text text-anchor="start" x="1278.2" y="-1126.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_incrementDeposit(account: address, amount: uint256): uint256</text>
 <text text-anchor="start" x="1278.2" y="-1110.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_tryDecrementDeposit(account: address, amount: uint256): bool</text>
 <text text-anchor="start" x="1278.2" y="-1093.3" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="1278.2" y="-1076.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="1278.2" y="-1076.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; receive()</text>
 <text text-anchor="start" x="1278.2" y="-1059.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; addStake(unstakeDelaySec: uint32)</text>
 <text text-anchor="start" x="1278.2" y="-1042.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;getDepositInfo(account: address): (info: DepositInfo)</text>
 <text text-anchor="start" x="1278.2" y="-1026.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;unlockStake()</text>

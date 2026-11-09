@@ -108,12 +108,19 @@ export function parseContractDefinition(
 
             addAssociations(subNode.variables, umlClass)
         } else if (isUsingForDeclaration(subNode)) {
-            umlClass.addAssociation({
-                referenceType: ReferenceType.Memory,
-                // libraryName is null for `using {f} for T`; kept as-is
-                targetUmlClassName: (<UsingForDeclaration>subNode)
-                    .libraryName as string,
-            })
+            const usingFor = <UsingForDeclaration>subNode
+            // `using {L.f, g} for T` has no libraryName, so link the libraries of qualified functions.
+            const libraryNames = usingFor.libraryName
+                ? [usingFor.libraryName]
+                : usingFor.functions
+                      .filter((fn) => fn.includes('.'))
+                      .map((fn) => fn.slice(0, fn.lastIndexOf('.')))
+            new Set(libraryNames).forEach((libraryName) =>
+                umlClass.addAssociation({
+                    referenceType: ReferenceType.Memory,
+                    targetUmlClassName: libraryName,
+                }),
+            )
         } else if (isFunctionDefinition(subNode)) {
             if (subNode.isConstructor) {
                 umlClass.operators.push({
@@ -131,7 +138,9 @@ export function parseContractDefinition(
             } else {
                 let stereotype = OperatorStereotype.None
 
-                if (subNode.body === null) {
+                if (subNode.isFallback) {
+                    stereotype = OperatorStereotype.Fallback
+                } else if (subNode.body === null) {
                     stereotype = OperatorStereotype.Abstract
                 } else if (subNode.stateMutability === 'payable') {
                     stereotype = OperatorStereotype.Payable
@@ -139,8 +148,10 @@ export function parseContractDefinition(
 
                 umlClass.operators.push({
                     visibility: parseVisibility(subNode.visibility),
-                    // name is null for receive and fallback; kept as-is
-                    name: subNode.name as string,
+                    // The parser leaves name null for receive and fallback functions.
+                    name:
+                        subNode.name ??
+                        (subNode.isReceiveEther ? 'receive' : 'fallback'),
                     stereotype,
                     parameters: parseParameters(subNode.parameters),
                     returnParameters: parseParameters(subNode.returnParameters),

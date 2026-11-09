@@ -81,7 +81,7 @@
 <text text-anchor="start" x="8" y="-680.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_getUnusedGasPenalty(gasUsed: uint256, gasLimit: uint256): uint256</text>
 <text text-anchor="start" x="8" y="-663.9" font-family="Times,serif" font-size="14.00">External:</text>
 <text text-anchor="start" x="8" y="-647.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; addStake(unstakeDelaySec: uint32)</text>
-<text text-anchor="start" x="8" y="-630.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="8" y="-630.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; receive()</text>
 <text text-anchor="start" x="8" y="-613.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;getDepositInfo(account: address): (info: DepositInfo)</text>
 <text text-anchor="start" x="8" y="-596.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;unlockStake()</text>
 <text text-anchor="start" x="8" y="-579.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;withdrawStake(withdrawAddress: address)</text>

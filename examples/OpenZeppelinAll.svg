@@ -991,7 +991,7 @@
 <text text-anchor="start" x="1698.84" y="-4719.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_checkEntryPoint()</text>
 <text text-anchor="start" x="1698.84" y="-4702.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_checkEntryPointOrSelf()</text>
 <text text-anchor="start" x="1698.84" y="-4686.1" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="1698.84" y="-4669.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="1698.84" y="-4669.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; receive()</text>
 <text text-anchor="start" x="1698.84" y="-4652.5" font-family="Times,serif" font-size="14.00">Public:</text>
 <text text-anchor="start" x="1698.84" y="-4635.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;modifier&gt;&gt; onlyEntryPointOrSelf()</text>
 <text text-anchor="start" x="1698.84" y="-4618.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;modifier&gt;&gt; onlyEntryPoint()</text>
@@ -1172,7 +1172,7 @@
 <text text-anchor="start" x="4827.46" y="-3456.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_decodeFallbackData(data: bytes): (selector: bytes4, remaining: bytes)</text>
 <text text-anchor="start" x="4827.46" y="-3439.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_rawSignatureValidation(bytes32, bytes): bool</text>
 <text text-anchor="start" x="4827.46" y="-3422.7" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="4827.46" y="-3405.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null(bytes): bytes</text>
+<text text-anchor="start" x="4827.46" y="-3405.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;fallback&gt;&gt; fallback(bytes): bytes</text>
 <text text-anchor="start" x="4827.46" y="-3389.1" font-family="Times,serif" font-size="14.00">Public:</text>
 <text text-anchor="start" x="4827.46" y="-3372.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; execute(mode: bytes32, executionCalldata: bytes) &lt;&lt;onlyEntryPointOrSelf&gt;&gt;</text>
 <text text-anchor="start" x="4827.46" y="-3355.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; executeFromExecutor(mode: bytes32, executionCalldata: bytes): (returnData: bytes[]) &lt;&lt;onlyModule&gt;&gt;</text>
@@ -2258,7 +2258,7 @@
 <text text-anchor="start" x="8242.25" y="-3573.9" font-family="Times,serif" font-size="14.00">Internal:</text>
 <text text-anchor="start" x="8242.25" y="-3557.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_vestingSchedule(totalAllocation: uint256, timestamp: uint64): uint256</text>
 <text text-anchor="start" x="8242.25" y="-3540.3" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="8242.25" y="-3523.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="8242.25" y="-3523.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; receive()</text>
 <text text-anchor="start" x="8242.25" y="-3506.7" font-family="Times,serif" font-size="14.00">Public:</text>
 <text text-anchor="start" x="8242.25" y="-3489.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;event&gt;&gt; EtherReleased(amount: uint256)</text>
 <text text-anchor="start" x="8242.25" y="-3473.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;event&gt;&gt; ERC20Released(token: address, amount: uint256)</text>
@@ -2377,7 +2377,7 @@
 <text text-anchor="start" x="29649.53" y="-3531.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_isValidDescriptionForProposer(proposer: address, description: string): bool</text>
 <text text-anchor="start" x="29649.53" y="-3515.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_validateCancel(proposalId: uint256, caller: address): bool</text>
 <text text-anchor="start" x="29649.53" y="-3498.3" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="29649.53" y="-3481.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="29649.53" y="-3481.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; receive()</text>
 <text text-anchor="start" x="29649.53" y="-3464.7" font-family="Times,serif" font-size="14.00">Public:</text>
 <text text-anchor="start" x="29649.53" y="-3447.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;abstract&gt;&gt; clock(): uint48</text>
 <text text-anchor="start" x="29649.53" y="-3431.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;abstract&gt;&gt; CLOCK_MODE(): string</text>
@@ -2756,7 +2756,7 @@
 <text text-anchor="start" x="18440.94" y="-3573.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_execute(target: address, value: uint256, data: bytes)</text>
 <text text-anchor="start" x="18440.94" y="-3557.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_encodeStateBitmap(operationState: OperationState): bytes32</text>
 <text text-anchor="start" x="18440.94" y="-3540.3" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="18440.94" y="-3523.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="18440.94" y="-3523.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; receive()</text>
 <text text-anchor="start" x="18440.94" y="-3506.7" font-family="Times,serif" font-size="14.00">Public:</text>
 <text text-anchor="start" x="18440.94" y="-3489.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; execute(target: address, value: uint256, payload: bytes, predecessor: bytes32, salt: bytes32) &lt;&lt;onlyRoleOrOpenRole&gt;&gt;</text>
 <text text-anchor="start" x="18440.94" y="-3473.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; executeBatch(targets: address[], values: uint256[], payloads: bytes[], predecessor: bytes32, salt: bytes32) &lt;&lt;onlyRoleOrOpenRole&gt;&gt;</text>
@@ -3567,7 +3567,7 @@
 <text text-anchor="middle" x="28082.94" y="-3661.5" font-family="Times,serif" font-size="14.00">ICompoundTimelock</text>
 <polyline fill="none" stroke="black" points="27722.66,-3653.3 28443.22,-3653.3 "/>
 <text text-anchor="start" x="27730.66" y="-3636.7" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="27730.66" y="-3619.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&#160;null()</text>
+<text text-anchor="start" x="27730.66" y="-3619.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&#160;receive()</text>
 <text text-anchor="start" x="27730.66" y="-3603.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&#160;GRACE_PERIOD(): uint256</text>
 <text text-anchor="start" x="27730.66" y="-3586.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&#160;MINIMUM_DELAY(): uint256</text>
 <text text-anchor="start" x="27730.66" y="-3569.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&#160;MAXIMUM_DELAY(): uint256</text>
@@ -4926,7 +4926,7 @@
 <text text-anchor="start" x="40368.85" y="-4677.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_delegate(implementation: address)</text>
 <text text-anchor="start" x="40368.85" y="-4660.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_fallback()</text>
 <text text-anchor="start" x="40368.85" y="-4644.1" font-family="Times,serif" font-size="14.00">External:</text>
-<text text-anchor="start" x="40368.85" y="-4627.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;payable&gt;&gt; null()</text>
+<text text-anchor="start" x="40368.85" y="-4627.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;fallback&gt;&gt; fallback()</text>
 </g>
 <!-- 183&#45;&gt;91 -->
 <g id="edge252" class="edge">
