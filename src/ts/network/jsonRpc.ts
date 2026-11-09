@@ -33,11 +33,11 @@ export const assertHexQuantity = (value: unknown, method: string): bigint => {
     return BigInt(value)
 }
 
-export const rpcRequest = async <T>(
+export const rpcRequest = async (
     url: string,
     method: string,
     params: unknown[],
-): Promise<T> => {
+): Promise<unknown> => {
     const response = (await postJson(url, {
         jsonrpc: '2.0',
         id: nextId++,
@@ -47,7 +47,7 @@ export const rpcRequest = async <T>(
     if (response?.error) {
         throw Error(`json rpc call ${method} failed: ${response.error.message}`)
     }
-    return response?.result as T
+    return response?.result
 }
 
 export const rpcBatch = async (
